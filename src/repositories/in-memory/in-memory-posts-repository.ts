@@ -38,4 +38,29 @@ export class InMemoryPostsRepository implements PostsRepository {
 
     return post
   }
+
+  async fetchPosts() {
+    const posts = await Promise.all(
+      this.items.map(async (item) => {
+        const id = item.id
+        const content = item.content
+        const likes = item.likes ?? 0
+        const dislikes = item.dislikes ?? 0
+        const createdAt = new Date(item.created_at).toISOString()
+        const updatedAt = item.updated_at
+          ? new Date(item.updated_at).toISOString()
+          : 'no updates'
+        const creator = {
+          id: item.creator_id,
+          name: 'some-name',
+        }
+
+        return { id, content, likes, dislikes, createdAt, updatedAt, creator }
+      }),
+    )
+
+    console.log(posts)
+
+    return posts
+  }
 }

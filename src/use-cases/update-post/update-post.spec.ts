@@ -38,4 +38,3 @@ describe('Create Post Use Case', () => {
     ).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
 })
-9
