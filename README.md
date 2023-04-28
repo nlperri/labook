@@ -3,16 +3,16 @@
 ## RFs (Requisitos funcionais)
 
 - [x] Deve ser possível se cadastrar;
-- [ ] Deve ser possível se autenticar;
+- [x] Deve ser possível se autenticar;
 - [ ] Deve ser possível obter lista de posts;
-- [ ] Deve ser possível criar um post;
+- [x] Deve ser possível criar um post;
 - [ ] Deve ser possível editar um post;
 - [ ] Deve ser possível deletar um post;
 - [ ] Deve ser possível dar like/dislike em um post;
 
 ## RNs (Regras de negócio)
 
-- [ ] O usuário não deve poder se cadastrar com um e-mail duplicado;
+- [x] O usuário não deve poder se cadastrar com um e-mail duplicado;
 - [ ] O usuário não deve poder dar like/dislike no próprio post;
 - [ ] Caso usuário dê um dislike em um post que já tenha dado dislike, o dislike é desfeito (deleta o item da tabela);
 - [ ] Caso usuário dê um like em um post que já tenha dado like, o like é desfeito (deleta o item da tabela);
@@ -21,6 +21,6 @@
 
 ## RNFs (Requisitos não-funcionais)
 
-- [ ] A senha do usuário precisa estar criptografada;
+- [x] A senha do usuário precisa estar criptografada;
 - [ ] Os dados da aplicação precisam estar persistidos em um banco SQLite;
 - [ ] O usuário deve ser identificado por um JJWT (JSON Web Token);
