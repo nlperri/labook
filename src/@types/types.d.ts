@@ -30,8 +30,10 @@ export type PostCreateInput = {
   id?: string
   creator_id?: string
   content: string
-  likes?: number
-  deslikes?: number
-  created_at?: Date | string
-  updated_at?: Date | string
+}
+
+export type PostEditInput = {
+  id: string
+  creator_id?: string
+  content: string
 }
