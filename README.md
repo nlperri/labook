@@ -7,7 +7,7 @@
 - [x] Deve ser possível obter lista de posts;
 - [x] Deve ser possível criar um post;
 - [x] Deve ser possível editar um post;
-- [ ] Deve ser possível deletar um post;
+- [x] Deve ser possível deletar um post;
 - [ ] Deve ser possível dar like/dislike em um post;
 
 ## RNs (Regras de negócio)
