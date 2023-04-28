@@ -9,7 +9,7 @@ export class FetchPostsUseCase {
   constructor(private postsRepository: PostsRepository) {}
 
   async execute(): Promise<FetchPostsUseCaseResponse> {
-    const posts = await this.postsRepository.fetchPosts()
+    const posts = await this.postsRepository.fetch()
 
     return {
       posts,

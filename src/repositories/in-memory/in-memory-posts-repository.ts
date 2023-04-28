@@ -39,7 +39,7 @@ export class InMemoryPostsRepository implements PostsRepository {
     return post
   }
 
-  async fetchPosts() {
+  async fetch() {
     const posts = await Promise.all(
       this.items.map(async (item) => {
         const id = item.id
@@ -59,8 +59,11 @@ export class InMemoryPostsRepository implements PostsRepository {
       }),
     )
 
-    console.log(posts)
-
     return posts
+  }
+
+  async delete(id: string) {
+    const postIndex = this.items.findIndex((item) => item.id === id)
+    this.items.splice(postIndex, 1)
   }
 }

@@ -9,5 +9,6 @@ export interface PostsRepository {
   create(data: PostCreateInput): Promise<Post>
   findById(id: string): Promise<Post | null>
   update(data: PostEditInput): Promise<Post | null>
-  fetchPosts(): Promise<FetchPostsOutput[] | []>
+  fetch(): Promise<FetchPostsOutput[] | []>
+  delete(id: string): Promise<void>
 }

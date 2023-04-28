@@ -5,7 +5,7 @@ import { FetchPostsUseCase } from './fetch-posts'
 let postsRepository: InMemoryPostsRepository
 let sut: FetchPostsUseCase
 
-describe('Create Post Use Case', () => {
+describe('Fetch Posts Use Case', () => {
   beforeEach(() => {
     postsRepository = new InMemoryPostsRepository()
     sut = new FetchPostsUseCase(postsRepository)

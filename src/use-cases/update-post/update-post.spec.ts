@@ -6,7 +6,7 @@ import { ResourceNotFoundError } from '../@errors/resource-not-found-error'
 let postsRepository: InMemoryPostsRepository
 let sut: UpdatePostUseCase
 
-describe('Create Post Use Case', () => {
+describe('Update Post Use Case', () => {
   beforeEach(() => {
     postsRepository = new InMemoryPostsRepository()
     sut = new UpdatePostUseCase(postsRepository)
