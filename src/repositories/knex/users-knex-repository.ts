@@ -3,7 +3,7 @@ import { UserCreateInput } from '../../@types/types'
 import { Db } from '../../database/BaseDataBase'
 import { UsersRepository } from '../users-repository'
 
-export class UsersKnexRepository extends Db implements UsersRepository {
+export class KnexUsersRepository extends Db implements UsersRepository {
   async findByEmail(email: string) {
     const [result] = await Db.connection('users').where({
       email,

@@ -3,7 +3,7 @@ import { PostCreateInput, PostEditInput } from '../../@types/types'
 import { Db } from '../../database/BaseDataBase'
 import { PostsRepository } from '../posts-repository'
 
-export class PostsKnexRepository extends Db implements PostsRepository {
+export class KnexPostsRepository extends Db implements PostsRepository {
   async create({ content, creator_id }: PostCreateInput) {
     const newPost = {
       id: randomUUID(),

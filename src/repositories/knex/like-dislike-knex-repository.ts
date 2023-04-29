@@ -2,7 +2,7 @@ import { LikeDislikePostInput } from '../../@types/types'
 import { Db } from '../../database/BaseDataBase'
 import { likeDislikeRepository } from '../like-dislike-repository'
 
-export class LikeDislikeKnexRepository
+export class KnexLikeDislikeRepository
   extends Db
   implements likeDislikeRepository
 {
