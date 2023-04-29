@@ -1,6 +1,5 @@
 import { LikeDislike, LikeDislikePostInput } from '../../@types/types'
 import { likeDislikeRepository } from '../like-dislike-repository'
-import { PostsRepository } from '../posts-repository'
 
 export class InMemoryLikeDislikeRepository implements likeDislikeRepository {
   public items: LikeDislike[] = []
