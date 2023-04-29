@@ -24,4 +24,4 @@
 
 - [x] A senha do usuário precisa estar criptografada;
 - [x] Os dados da aplicação precisam estar persistidos em um banco SQLite;
-- [ ] O usuário deve ser identificado por um JJWT (JSON Web Token);
+- [x] O usuário deve ser identificado por um JJWT (JSON Web Token);
