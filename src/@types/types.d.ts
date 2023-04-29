@@ -7,15 +7,6 @@ export type User = {
   role: string
 }
 
-export type UserCreateInput = {
-  id?: string
-  name: string
-  email: string
-  password_hash: string
-  created_at?: Date | string
-  role?: string
-}
-
 export type Post = {
   id: string
   creator_id: string
@@ -26,9 +17,23 @@ export type Post = {
   updated_at?: Date | string
 }
 
-export type PostCreateInput = {
+export type LikeDislike = {
+  user_id: string
+  post_id: string
+  like: number
+}
+
+export type UserCreateInput = {
   id?: string
-  creator_id?: string
+  name: string
+  email: string
+  password_hash: string
+  created_at?: Date | string
+  role?: string
+}
+
+export type PostCreateInput = {
+  creator_id: string
   content: string
 }
 
@@ -49,4 +54,10 @@ export type FetchPostsOutput = {
     id: string
     name: string
   }
+}
+
+export type LikeDislikePostInput = {
+  userId: string
+  postId: string
+  like: boolean
 }

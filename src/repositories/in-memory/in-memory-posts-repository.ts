@@ -1,15 +1,17 @@
 import { randomUUID } from 'crypto'
-import { Post, PostCreateInput, PostEditInput } from '../../@types/types'
+import { Post, PostCreateInput, PostEditInput, User } from '../../@types/types'
 import { PostsRepository } from '../posts-repository'
+import { InMemoryUsersRepository } from './in-memory-users-repository'
 
 export class InMemoryPostsRepository implements PostsRepository {
+  constructor(private readonly userRepository: InMemoryUsersRepository) {}
   public items: Post[] = []
 
-  async create(data: PostCreateInput) {
+  async create({ content, creator_id }: PostCreateInput) {
     const post = {
       id: randomUUID(),
-      creator_id: 'user-01',
-      content: data.content,
+      creator_id,
+      content: content,
       created_at: new Date(),
     }
     this.items.push(post)
@@ -34,12 +36,13 @@ export class InMemoryPostsRepository implements PostsRepository {
       return null
     }
 
-    const post = { ...postToEdit, content }
+    const post = { ...postToEdit, content, update: new Date() }
 
     return post
   }
 
   async fetch() {
+    const users = this.userRepository.items
     const posts = await Promise.all(
       this.items.map(async (item) => {
         const id = item.id
@@ -50,9 +53,13 @@ export class InMemoryPostsRepository implements PostsRepository {
         const updatedAt = item.updated_at
           ? new Date(item.updated_at).toISOString()
           : 'no updates'
+        const user = users.find((user) => user.id === item.creator_id)
+        if (!user) {
+          throw new Error('Post without user x.x')
+        }
         const creator = {
           id: item.creator_id,
-          name: 'some-name',
+          name: user.id,
         }
 
         return { id, content, likes, dislikes, createdAt, updatedAt, creator }
@@ -65,5 +72,70 @@ export class InMemoryPostsRepository implements PostsRepository {
   async delete(id: string) {
     const postIndex = this.items.findIndex((item) => item.id === id)
     this.items.splice(postIndex, 1)
+  }
+
+  async like(id: string, shouldDecrement: boolean = false) {
+    const post = await this.findById(id)
+
+    if (!post) {
+      throw new Error()
+    }
+
+    if (shouldDecrement) {
+      const posts = this.items.map((item) => {
+        if (item.id === post.id) {
+          return {
+            ...item,
+            like: item.likes ? item.likes - 1 : item.likes,
+          }
+        }
+        return item
+      })
+      this.items = posts
+      return
+    }
+
+    const posts = this.items.map((item) => {
+      if (item.id === post.id) {
+        return {
+          ...item,
+          like: item.likes ? item.likes++ : 1,
+        }
+      }
+      return item
+    })
+    this.items = posts
+  }
+  async dislike(id: string, shouldDecrement: boolean = false) {
+    const post = await this.findById(id)
+
+    if (!post) {
+      throw new Error()
+    }
+
+    if (shouldDecrement) {
+      const posts = this.items.map((item) => {
+        if (item.id === post.id) {
+          return {
+            ...item,
+            like: item.dislikes ? item.dislikes - 1 : item.dislikes,
+          }
+        }
+        return item
+      })
+      this.items = posts
+      return
+    }
+
+    const posts = this.items.map((item) => {
+      if (item.id === post.id) {
+        return {
+          ...item,
+          like: item.dislikes ? item.dislikes++ : 1,
+        }
+      }
+      return item
+    })
+    this.items = posts
   }
 }
