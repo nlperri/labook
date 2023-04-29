@@ -1,10 +1,11 @@
 import { knex } from 'knex'
+import { env } from '../env'
 
 export abstract class Db {
   protected static connection = knex({
     client: 'sqlite3',
     connection: {
-      filename: './src/database/labook.db',
+      filename: env.DB_FILE_PATH,
     },
     useNullAsDefault: true,
     pool: {
