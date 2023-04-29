@@ -4,7 +4,18 @@ export type User = {
   email: string
   password_hash: string
   created_at: Date | string
-  role: string
+  role: USER_ROLES
+}
+
+export enum USER_ROLES {
+  NORMAL = 'NORMAL',
+  ADMIN = 'ADMIN',
+}
+
+export interface TokenPayload {
+  id: string
+  name: string
+  role: USER_ROLES
 }
 
 export type Post = {

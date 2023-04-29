@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto'
-import { User, UserCreateInput } from '../../@types/types'
+import { USER_ROLES, User, UserCreateInput } from '../../@types/types'
 import { UsersRepository } from '../users-repository'
 
 export class InMemoryUsersRepository implements UsersRepository {
@@ -20,7 +20,7 @@ export class InMemoryUsersRepository implements UsersRepository {
       email: data.email,
       password_hash: data.password_hash,
       created_at: new Date(),
-      role: 'admin',
+      role: USER_ROLES.ADMIN,
     }
     this.items.push(user)
 
