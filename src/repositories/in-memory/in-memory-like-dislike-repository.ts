@@ -3,7 +3,6 @@ import { likeDislikeRepository } from '../like-dislike-repository'
 import { PostsRepository } from '../posts-repository'
 
 export class InMemoryLikeDislikeRepository implements likeDislikeRepository {
-  constructor(private postsRepository: PostsRepository) {}
   public items: LikeDislike[] = []
   async create({ like, postId, userId }: LikeDislikePostInput) {
     const newLikeDislike = {

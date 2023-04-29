@@ -86,7 +86,11 @@ export class InMemoryPostsRepository implements PostsRepository {
         if (item.id === post.id) {
           return {
             ...item,
-            like: item.likes ? item.likes - 1 : item.likes,
+            likes: item.likes
+              ? item.likes - 1 === 0
+                ? undefined
+                : item.likes - 1
+              : item.likes,
           }
         }
         return item
@@ -99,11 +103,13 @@ export class InMemoryPostsRepository implements PostsRepository {
       if (item.id === post.id) {
         return {
           ...item,
-          like: item.likes ? item.likes++ : 1,
+          likes: item.likes ? item.likes++ : 1,
         }
       }
+
       return item
     })
+
     this.items = posts
   }
   async dislike(id: string, shouldDecrement: boolean = false) {
@@ -118,7 +124,11 @@ export class InMemoryPostsRepository implements PostsRepository {
         if (item.id === post.id) {
           return {
             ...item,
-            like: item.dislikes ? item.dislikes - 1 : item.dislikes,
+            dislikes: item.dislikes
+              ? item.dislikes - 1 === 0
+                ? undefined
+                : item.dislikes - 1
+              : item.dislikes,
           }
         }
         return item
@@ -131,9 +141,10 @@ export class InMemoryPostsRepository implements PostsRepository {
       if (item.id === post.id) {
         return {
           ...item,
-          like: item.dislikes ? item.dislikes++ : 1,
+          dislikes: item.dislikes ? item.dislikes++ : 1,
         }
       }
+
       return item
     })
     this.items = posts

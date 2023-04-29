@@ -45,6 +45,14 @@ export class LikeDislikePostUseCase {
         postId,
         userId,
       })
+      if (like) {
+        await this.postsRepository.dislike(postId, true)
+        await this.postsRepository.like(postId)
+      }
+      if (!like) {
+        await this.postsRepository.like(postId, true)
+        await this.postsRepository.dislike(postId)
+      }
       return
     }
 
@@ -56,7 +64,8 @@ export class LikeDislikePostUseCase {
     const isDislikedInDatabase = likeInDatabase?.like === DISLIKE
 
     const isLikeTrueAndAlreadyLiked = like && isLikedInDatabase
-    const isDislikeTrueAndAlreadyDisliked = !like && isDislikedInDatabase
+    const isLikeTrueAndAlreadyDisliked = like && isDislikedInDatabase
+
     if (isLikeTrueAndAlreadyLiked) {
       await this.likeDislikeRepository.delete(postId, userId)
       await this.postsRepository.like(postId, true)
@@ -70,8 +79,8 @@ export class LikeDislikePostUseCase {
       return
     }
 
-    const isPostDislikedAndUserWantToLike =
-      isDislikeTrueAndAlreadyDisliked && like
+    const isPostDislikedAndUserWantToLike = isLikeTrueAndAlreadyDisliked && like
+
     if (isPostDislikedAndUserWantToLike) {
       await this.postsRepository.like(postId)
       await this.postsRepository.dislike(postId, true)
@@ -80,7 +89,7 @@ export class LikeDislikePostUseCase {
     }
 
     const isPostLikedAndUserWantToDislike = isLikeTrueAndAlreadyLiked && !like
-    if (isPostLikedAndUserWantToDislike) {
+    if (!isPostLikedAndUserWantToDislike) {
       await this.postsRepository.like(postId, true)
       await this.postsRepository.dislike(postId)
       await this.likeDislikeRepository.update(postId, userId, DISLIKE)
