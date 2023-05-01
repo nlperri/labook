@@ -1,14 +1,16 @@
 import { Request, Response } from 'express'
 import { z } from 'zod'
 import { ResourceNotFoundError } from '../../use-cases/@errors/resource-not-found-error'
-import { CreatePostUseCase } from '../../use-cases/create-post/create-post'
 import { USER_ROLES } from '../../@types/types'
+import { UpdatePostUseCase } from '../../use-cases/update-post/update-post'
+import { UserNotAllowed } from '../../use-cases/@errors/user-not-alowed-error'
 
-export class CreatePostController {
-  constructor(private createPostUseCase: CreatePostUseCase) {}
+export class UpdatePostController {
+  constructor(private updatePostUseCase: UpdatePostUseCase) {}
   async execute(req: Request, res: Response) {
-    const createPostInputSchema = z.object({
+    const updatePostInputSchema = z.object({
       content: z.string(),
+      id: z.string(),
       user: z.object({
         id: z.string(),
         name: z.string(),
@@ -16,20 +18,25 @@ export class CreatePostController {
       }),
     })
 
-    const { content, user } = createPostInputSchema.parse({
+    const { id, content, user } = updatePostInputSchema.parse({
       content: req.body.content,
+      id: req.params.id,
       user: req.user,
     })
 
     try {
-      const { post } = await this.createPostUseCase.execute({
+      const { post } = await this.updatePostUseCase.execute({
+        id,
         content,
-        userId: user.id,
+        user,
       })
 
-      res.status(201).send(post)
+      res.status(200).send(post)
     } catch (error) {
       if (error instanceof ResourceNotFoundError) {
+        res.status(error.statusCode).send(error.message)
+      }
+      if (error instanceof UserNotAllowed) {
         res.status(error.statusCode).send(error.message)
       }
       throw error

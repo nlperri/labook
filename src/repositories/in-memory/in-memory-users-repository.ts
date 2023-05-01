@@ -20,7 +20,7 @@ export class InMemoryUsersRepository implements UsersRepository {
       email: data.email,
       password: data.password_hash,
       created_at: new Date(),
-      role: USER_ROLES.ADMIN,
+      role: data.role ? data.role : USER_ROLES.NORMAL,
     }
     this.items.push(user)
 

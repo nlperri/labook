@@ -16,7 +16,7 @@ export class RegisterController {
     try {
       await this.registerUseCase.execute({ name, email, password })
 
-      res.status(201).send()
+      res.status(201).send('User successfully registered')
     } catch (error) {
       if (error instanceof UserAlreadyExistsError) {
         res.status(error.statusCode).send(error.message)

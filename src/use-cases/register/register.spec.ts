@@ -30,7 +30,7 @@ describe('Register Use Case', () => {
       password: '123456',
     })
 
-    const isPasswordHashed = await compare('123456', user.password_hash)
+    const isPasswordHashed = await compare('123456', user.password)
 
     expect(isPasswordHashed).toBe(true)
   })

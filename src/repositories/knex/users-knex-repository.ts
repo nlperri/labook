@@ -35,7 +35,7 @@ export class KnexUsersRepository extends Db implements UsersRepository {
   }
 
   async findById(id: string) {
-    const [result] = await Db.connection('users').where({ id })
+    const result = await Db.connection('users').where({ id }).first()
 
     return result
   }

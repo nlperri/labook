@@ -52,10 +52,10 @@ export class KnexPostsRepository extends Db implements PostsRepository {
         'posts.created_at as createdAt',
         'posts.updated_at as updatedAt',
         Db.connection.raw(
-          'JSON_OBJECT("id", "users.id", "name", "users.name") as creator',
+          'JSON_OBJECT("userId", posts.creator_id, "userName", name) as creator',
         ),
       )
-      .innerJoin('users', 'products.creator_id', '=', 'users.id')
+      .innerJoin('users', 'users.id', '=', 'posts.creator_id')
 
     const formattedResult = results.map((result) => {
       const id = result.id
@@ -66,7 +66,18 @@ export class KnexPostsRepository extends Db implements PostsRepository {
       const updatedAt = result.updatedAt ? result.updatedAt : undefined
       const creator = JSON.parse(result.creator)
 
-      return { id, content, likes, dislikes, createdAt, updatedAt, creator }
+      return {
+        id,
+        content,
+        likes,
+        dislikes,
+        createdAt,
+        updatedAt,
+        creator: {
+          id: creator.userId,
+          name: creator.userName,
+        },
+      }
     })
 
     return formattedResult
@@ -77,7 +88,7 @@ export class KnexPostsRepository extends Db implements PostsRepository {
   }
 
   async like(id: string, shouldDecrement: boolean = false) {
-    const [post] = await this.findById(id)
+    const post = await this.findById(id)
 
     let updatedLikesCount = post.likes
 

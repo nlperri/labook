@@ -40,7 +40,7 @@ export type UserCreateInput = {
   email: string
   password_hash: string
   created_at?: Date | string
-  role?: string
+  role?: USER_ROLES
 }
 
 export type PostCreateInput = {
