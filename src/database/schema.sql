@@ -2,6 +2,7 @@
 
 
 
+
 CREATE TABLE users (
     id TEXT PRIMARY KEY NOT NULL UNIQUE,
     name TEXT NOT NULL,
@@ -19,8 +20,9 @@ CREATE TABLE posts (
     dislikes NUMBER,
     created_at TEXT NOT NULL,
     updated_at TEXT,        
-    FOREIGN KEY (creator_id) REFERENCES user(id)
+    FOREIGN KEY (creator_id) REFERENCES users(id)
 );
+
 
 
 CREATE TABLE likes_dislikes (

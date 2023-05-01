@@ -1,6 +1,6 @@
-import { Authenticate } from '../../http/controllers/authenticate.controller'
-import { CreatePost } from '../../http/controllers/create-post.controller'
-import { Register } from '../../http/controllers/register.controller'
+import { AuthenticateController } from '../../http/controllers/authenticate.controller'
+import { CreatePostController } from '../../http/controllers/create-post.controller'
+import { RegisterController } from '../../http/controllers/register.controller'
 import { TokenManager } from '../../http/token-manager'
 import { makeAuthenticateUseCase } from './make-authenticate-use-case'
 import { makeCreatePostUseCase } from './make-create-post-use-case'
@@ -11,9 +11,12 @@ export function makeRoutes() {
   const registerUseCase = makeRegisterUseCase()
   const authenticateUseCase = makeAuthenticateUseCase()
   const createPostUseCase = makeCreatePostUseCase()
-  const authenticate = new Authenticate(tokenManager, authenticateUseCase)
-  const register = new Register(registerUseCase)
-  const createPost = new CreatePost(createPostUseCase)
+  const authenticate = new AuthenticateController(
+    tokenManager,
+    authenticateUseCase,
+  )
+  const register = new RegisterController(registerUseCase)
+  const createPost = new CreatePostController(createPostUseCase)
 
   return { authenticate, register, createPost }
 }

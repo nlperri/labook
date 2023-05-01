@@ -4,7 +4,7 @@ import { InvalidCredentialsError } from '../../use-cases/@errors/invalid-credent
 import { TokenManager } from '../token-manager'
 import { AuthenticateUseCase } from '../../use-cases/authenticate/authenticate'
 
-export class Authenticate {
+export class AuthenticateController {
   constructor(
     private tokenManager: TokenManager,
     private authenticateUseCase: AuthenticateUseCase,

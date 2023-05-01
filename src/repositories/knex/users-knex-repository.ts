@@ -24,7 +24,7 @@ export class KnexUsersRepository extends Db implements UsersRepository {
       id: randomUUID(),
       name,
       email,
-      password_hash,
+      password: password_hash,
       created_at: new Date().toISOString(),
       role,
     }

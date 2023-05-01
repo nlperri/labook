@@ -2,19 +2,27 @@ import { Request, Response } from 'express'
 import { z } from 'zod'
 import { ResourceNotFoundError } from '../../use-cases/@errors/resource-not-found-error'
 import { CreatePostUseCase } from '../../use-cases/create-post/create-post'
+import { USER_ROLES } from '../../@types/types'
 
-export class CreatePost {
+export class CreatePostController {
   constructor(private createPostUseCase: CreatePostUseCase) {}
   async execute(req: Request, res: Response) {
     const createPostInputSchema = z.object({
       content: z.string(),
-      userId: z.string(),
+      user: z.object({
+        id: z.string(),
+        name: z.string(),
+        role: z.enum([USER_ROLES.ADMIN, USER_ROLES.NORMAL]),
+      }),
     })
 
-    const { content, userId } = createPostInputSchema.parse(req.body)
+    const { content, user } = createPostInputSchema.parse({
+      content: req.body.content,
+      user: req.user,
+    })
 
     try {
-      await this.createPostUseCase.execute({ content, userId })
+      await this.createPostUseCase.execute({ content, userId: user.id })
 
       res.status(201).send()
     } catch (error) {
