@@ -1,6 +1,7 @@
 {
-  "entryFile": "src/http/controllers/register.controller.ts",
+  "entryFile": "src/server.ts",
   "noImplicitAdditionalProperties": "throw-on-extras",
+  "controllerPathGlobs": ["src/**/*.controller.ts"],
   "spec": {
     "outputDirectory": "docs",
     "host": "localhost:3003",

@@ -28,10 +28,10 @@ export async function appRoutes() {
     '/posts',
     (req, res, next) => authenticationMiddleware.auth(req, res, next),
     async (req, res) => {
-      const { payload, statusCode } = await createPost.execute(
-        req.body.content,
-        req.user!,
-      )
+      const { payload, statusCode } = await createPost.execute({
+        requestContent: req.body.content,
+        requestUser: req.user!,
+      })
       res.json(payload).status(statusCode)
     },
   )
@@ -47,11 +47,11 @@ export async function appRoutes() {
     '/posts/:id',
     (req, res, next) => authenticationMiddleware.auth(req, res, next),
     async (req, res) => {
-      const { payload, statusCode } = await updatePosts.execute(
-        req.body.content,
-        req.params.id,
-        req.user!,
-      )
+      const { payload, statusCode } = await updatePosts.execute({
+        requestContent: req.body.content,
+        requestId: req.params.id,
+        requestUser: req.user!,
+      })
       res.json(payload).status(statusCode)
     },
   )
@@ -59,10 +59,10 @@ export async function appRoutes() {
     '/posts/:id',
     (req, res, next) => authenticationMiddleware.auth(req, res, next),
     async (req, res) => {
-      const { payload, statusCode } = await deletePosts.execute(
-        req.params.id,
-        req.user!,
-      )
+      const { payload, statusCode } = await deletePosts.execute({
+        requestId: req.params.id,
+        requestUser: req.user!,
+      })
       res.json(payload).status(statusCode)
     },
   )
@@ -70,11 +70,11 @@ export async function appRoutes() {
     '/posts/:id/like',
     (req, res, next) => authenticationMiddleware.auth(req, res, next),
     async (req, res) => {
-      const { payload, statusCode } = await likeDislikePosts.execute(
-        req.body.like,
-        req.params.id,
-        req.user!,
-      )
+      const { payload, statusCode } = await likeDislikePosts.execute({
+        requestLike: req.body.like,
+        requestPostId: req.params.id,
+        requestUser: req.user!,
+      })
       res.json(payload).status(statusCode)
     },
   )

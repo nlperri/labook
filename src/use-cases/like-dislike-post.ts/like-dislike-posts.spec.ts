@@ -3,6 +3,7 @@ import { InMemoryPostsRepository } from '../../repositories/in-memory/in-memory-
 import { InMemoryUsersRepository } from '../../repositories/in-memory/in-memory-users-repository'
 import { InMemoryLikeDislikeRepository } from '../../repositories/in-memory/in-memory-like-dislike-repository'
 import { LikeDislikePostUseCase } from './like-dislike-post'
+import { USER_ROLES } from '../../@types/types'
 
 let likeDislikeRepository: InMemoryLikeDislikeRepository
 let postsRepository: InMemoryPostsRepository

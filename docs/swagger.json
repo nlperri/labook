@@ -21,7 +21,117 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"RequestBody": {
+			"AuthenticateRequestBody": {
+				"properties": {
+					"email": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"email",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"USER_ROLES": {
+				"enum": [
+					"NORMAL",
+					"ADMIN"
+				],
+				"type": "string"
+			},
+			"TokenPayload": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"role": {
+						"$ref": "#/components/schemas/USER_ROLES"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"role"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CreatePostRequestContent": {
+				"properties": {
+					"requestContent": {
+						"type": "string"
+					},
+					"requestUser": {
+						"$ref": "#/components/schemas/TokenPayload"
+					}
+				},
+				"required": [
+					"requestContent",
+					"requestUser"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"DeletePostRequest": {
+				"properties": {
+					"requestId": {
+						"type": "string"
+					},
+					"requestUser": {
+						"$ref": "#/components/schemas/TokenPayload"
+					}
+				},
+				"required": [
+					"requestId",
+					"requestUser"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"HttpResponse_any_": {
+				"properties": {
+					"payload": {},
+					"statusCode": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"payload",
+					"statusCode"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"LikeDislikePostRequest": {
+				"properties": {
+					"requestLike": {
+						"type": "boolean"
+					},
+					"requestPostId": {
+						"type": "string"
+					},
+					"requestUser": {
+						"$ref": "#/components/schemas/TokenPayload"
+					}
+				},
+				"required": [
+					"requestLike",
+					"requestPostId",
+					"requestUser"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RegisterRequestBody": {
 				"properties": {
 					"name": {
 						"type": "string"
@@ -40,6 +150,26 @@
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"UpdatePostRequestContent": {
+				"properties": {
+					"requestContent": {
+						"type": "string"
+					},
+					"requestId": {
+						"type": "string"
+					},
+					"requestUser": {
+						"$ref": "#/components/schemas/TokenPayload"
+					}
+				},
+				"required": [
+					"requestContent",
+					"requestId",
+					"requestUser"
+				],
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {}
@@ -54,6 +184,166 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
+		"/users/authenticate": {
+			"post": {
+				"operationId": "Execute",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HttpResponse_void_"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/AuthenticateRequestBody"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/posts": {
+			"post": {
+				"operationId": "Execute",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HttpResponse_void_"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreatePostRequestContent"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "Execute",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HttpResponse_any_"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/posts/{id}": {
+			"delete": {
+				"operationId": "Execute",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HttpResponse_void_"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/DeletePostRequest"
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"operationId": "Execute",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HttpResponse_void_"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdatePostRequestContent"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/posts/{id}/like": {
+			"put": {
+				"operationId": "Execute",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/HttpResponse_void_"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/LikeDislikePostRequest"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/users/register": {
 			"post": {
 				"operationId": "Execute",
@@ -79,7 +369,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/RequestBody"
+								"$ref": "#/components/schemas/RegisterRequestBody"
 							}
 						}
 					}

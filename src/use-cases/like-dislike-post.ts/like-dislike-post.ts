@@ -32,7 +32,7 @@ export class LikeDislikePostUseCase {
       throw new ResourceNotFoundError()
     }
 
-    if (post.creator_id !== userId) {
+    if (post.creator_id === userId) {
       throw new UserNotAllowed()
     }
 

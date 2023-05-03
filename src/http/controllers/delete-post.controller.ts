@@ -4,14 +4,18 @@ import { DeletePostUseCase } from '../../use-cases/delete-post/delete-post'
 import { Route, Body, Delete } from 'tsoa'
 import { HttpResponse } from '../response/response'
 
+interface DeletePostRequest {
+  requestId: string
+  requestUser: TokenPayload
+}
+
 @Route('posts')
 export class DeletePostController {
   constructor(private deletePostUseCase: DeletePostUseCase) {}
   @Delete(':id')
   async execute(
     @Body()
-    requestId: string,
-    requestUser: TokenPayload,
+    { requestId, requestUser }: DeletePostRequest,
   ) {
     const deletePostInputSchema = z.object({
       id: z.string(),

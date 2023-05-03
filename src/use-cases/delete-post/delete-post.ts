@@ -24,9 +24,9 @@ export class DeletePostUseCase {
     const isUserAdmin = user.role === USER_ROLES.ADMIN
     const isUserTheCreator = user.id === post.creator_id
 
-    const isPostsLiked = await this.likeDislikeRepository.findByIds(id, user.id)
+    const isPostLiked = await this.likeDislikeRepository.findByIds(id, user.id)
 
-    if (isPostsLiked) {
+    if (isPostLiked) {
       await this.likeDislikeRepository.delete(id, user.id)
     }
 

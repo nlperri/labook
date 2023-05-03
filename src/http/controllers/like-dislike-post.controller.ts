@@ -6,6 +6,8 @@ import { HttpResponse } from '../response/response'
 
 interface LikeDislikePostRequest {
   requestLike: boolean
+  requestPostId: string
+  requestUser: TokenPayload
 }
 
 @Route('posts')
@@ -14,9 +16,7 @@ export class LikeDislikePostController {
   @Put(':id/like')
   async execute(
     @Body()
-    requestLike: LikeDislikePostRequest,
-    requestPostId: string,
-    requestUser: TokenPayload,
+    { requestLike, requestPostId, requestUser }: LikeDislikePostRequest,
   ) {
     const likeDislikePostInputSchema = z.object({
       like: z.boolean(),

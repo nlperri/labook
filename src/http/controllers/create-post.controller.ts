@@ -5,7 +5,8 @@ import { Post, Route, Body } from 'tsoa'
 import { HttpResponse } from '../response/response'
 
 interface CreatePostRequestContent {
-  content: string
+  requestContent: string
+  requestUser: TokenPayload
 }
 
 @Route('posts')
@@ -13,8 +14,8 @@ export class CreatePostController {
   constructor(private createPostUseCase: CreatePostUseCase) {}
   @Post()
   async execute(
-    @Body() requestContent: CreatePostRequestContent,
-    requestUser: TokenPayload,
+    @Body()
+    { requestContent, requestUser }: CreatePostRequestContent,
   ) {
     const createPostInputSchema = z.object({
       content: z.string(),

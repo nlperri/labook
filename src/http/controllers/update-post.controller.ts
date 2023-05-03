@@ -5,7 +5,9 @@ import { Put, Route, Body } from 'tsoa'
 import { HttpResponse } from '../response/response'
 
 interface UpdatePostRequestContent {
-  content: string
+  requestContent: string
+  requestId: string
+  requestUser: TokenPayload
 }
 
 @Route('posts')
@@ -13,9 +15,8 @@ export class UpdatePostController {
   constructor(private updatePostUseCase: UpdatePostUseCase) {}
   @Put(':id')
   async execute(
-    @Body() requestContent: UpdatePostRequestContent,
-    requestId: string,
-    requestUser: TokenPayload,
+    @Body()
+    { requestContent, requestId, requestUser }: UpdatePostRequestContent,
   ) {
     const updatePostInputSchema = z.object({
       content: z.string(),
