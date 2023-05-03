@@ -1,13 +1,22 @@
-import { Request, Response } from 'express'
 import { z } from 'zod'
-import { ResourceNotFoundError } from '../../use-cases/@errors/resource-not-found-error'
-import { USER_ROLES } from '../../@types/types'
+import { TokenPayload, USER_ROLES } from '../../@types/types'
 import { UpdatePostUseCase } from '../../use-cases/update-post/update-post'
-import { UserNotAllowed } from '../../use-cases/@errors/user-not-alowed-error'
+import { Put, Route, Body } from 'tsoa'
+import { HttpResponse } from '../response/response'
 
+interface UpdatePostRequestContent {
+  content: string
+}
+
+@Route('posts')
 export class UpdatePostController {
   constructor(private updatePostUseCase: UpdatePostUseCase) {}
-  async execute(req: Request, res: Response) {
+  @Put(':id')
+  async execute(
+    @Body() requestContent: UpdatePostRequestContent,
+    requestId: string,
+    requestUser: TokenPayload,
+  ) {
     const updatePostInputSchema = z.object({
       content: z.string(),
       id: z.string(),
@@ -19,27 +28,17 @@ export class UpdatePostController {
     })
 
     const { id, content, user } = updatePostInputSchema.parse({
-      content: req.body.content,
-      id: req.params.id,
-      user: req.user,
+      content: requestContent,
+      id: requestId,
+      user: requestUser,
     })
 
-    try {
-      const { post } = await this.updatePostUseCase.execute({
-        id,
-        content,
-        user,
-      })
+    const { post } = await this.updatePostUseCase.execute({
+      id,
+      content,
+      user,
+    })
 
-      res.status(200).send(post)
-    } catch (error) {
-      if (error instanceof ResourceNotFoundError) {
-        res.status(error.statusCode).send(error.message)
-      }
-      if (error instanceof UserNotAllowed) {
-        res.status(error.statusCode).send(error.message)
-      }
-      throw error
-    }
+    return new HttpResponse<void>(post, 200)
   }
 }

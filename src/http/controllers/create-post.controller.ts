@@ -1,12 +1,21 @@
-import { Request, Response } from 'express'
 import { z } from 'zod'
-import { ResourceNotFoundError } from '../../use-cases/@errors/resource-not-found-error'
 import { CreatePostUseCase } from '../../use-cases/create-post/create-post'
-import { USER_ROLES } from '../../@types/types'
+import { TokenPayload, USER_ROLES } from '../../@types/types'
+import { Post, Route, Body } from 'tsoa'
+import { HttpResponse } from '../response/response'
 
+interface CreatePostRequestContent {
+  content: string
+}
+
+@Route('posts')
 export class CreatePostController {
   constructor(private createPostUseCase: CreatePostUseCase) {}
-  async execute(req: Request, res: Response) {
+  @Post()
+  async execute(
+    @Body() requestContent: CreatePostRequestContent,
+    requestUser: TokenPayload,
+  ) {
     const createPostInputSchema = z.object({
       content: z.string(),
       user: z.object({
@@ -17,22 +26,15 @@ export class CreatePostController {
     })
 
     const { content, user } = createPostInputSchema.parse({
-      content: req.body.content,
-      user: req.user,
+      content: requestContent,
+      user: requestUser,
     })
 
-    try {
-      const { post } = await this.createPostUseCase.execute({
-        content,
-        userId: user.id,
-      })
+    const { post } = await this.createPostUseCase.execute({
+      content,
+      userId: user.id,
+    })
 
-      res.status(201).send(post)
-    } catch (error) {
-      if (error instanceof ResourceNotFoundError) {
-        res.status(error.statusCode).send(error.message)
-      }
-      throw error
-    }
+    return new HttpResponse<void>(post, 201)
   }
 }

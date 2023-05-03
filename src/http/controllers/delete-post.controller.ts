@@ -1,13 +1,18 @@
-import { Request, Response } from 'express'
 import { z } from 'zod'
-import { ResourceNotFoundError } from '../../use-cases/@errors/resource-not-found-error'
-import { USER_ROLES } from '../../@types/types'
-import { UserNotAllowed } from '../../use-cases/@errors/user-not-alowed-error'
+import { TokenPayload, USER_ROLES } from '../../@types/types'
 import { DeletePostUseCase } from '../../use-cases/delete-post/delete-post'
+import { Route, Body, Delete } from 'tsoa'
+import { HttpResponse } from '../response/response'
 
+@Route('posts')
 export class DeletePostController {
   constructor(private deletePostUseCase: DeletePostUseCase) {}
-  async execute(req: Request, res: Response) {
+  @Delete(':id')
+  async execute(
+    @Body()
+    requestId: string,
+    requestUser: TokenPayload,
+  ) {
     const deletePostInputSchema = z.object({
       id: z.string(),
       user: z.object({
@@ -18,25 +23,15 @@ export class DeletePostController {
     })
 
     const { id, user } = deletePostInputSchema.parse({
-      id: req.params.id,
-      user: req.user,
+      id: requestId,
+      user: requestUser,
     })
 
-    try {
-      await this.deletePostUseCase.execute({
-        id,
-        user,
-      })
+    await this.deletePostUseCase.execute({
+      id,
+      user,
+    })
 
-      res.status(200).send('Post successfully deleted')
-    } catch (error) {
-      if (error instanceof ResourceNotFoundError) {
-        res.status(error.statusCode).send(error.message)
-      }
-      if (error instanceof UserNotAllowed) {
-        res.status(error.statusCode).send(error.message)
-      }
-      throw error
-    }
+    return new HttpResponse<void>('Post successfully deleted', 200)
   }
 }

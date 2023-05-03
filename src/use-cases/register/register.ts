@@ -2,6 +2,7 @@ import { hash } from 'bcryptjs'
 import { User } from '../../@types/types'
 import { UsersRepository } from '../../repositories/users-repository'
 import { UserAlreadyExistsError } from '../@errors/user-already-exists-error'
+import { BaseError } from '../@errors/base-error'
 
 interface RegisterUseCaseRequest {
   name: string

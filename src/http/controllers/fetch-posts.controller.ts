@@ -1,15 +1,14 @@
-import { Request, Response } from 'express'
 import { FetchPostsUseCase } from '../../use-cases/fetch-posts/fetch-posts'
+import { Route, Get } from 'tsoa'
+import { HttpResponse } from '../response/response'
 
+@Route('posts')
 export class FetchPostsController {
   constructor(private fetchPostsUseCase: FetchPostsUseCase) {}
-  async execute(_: Request, res: Response) {
-    try {
-      const { posts } = await this.fetchPostsUseCase.execute()
+  @Get()
+  async execute() {
+    const { posts } = await this.fetchPostsUseCase.execute()
 
-      res.status(201).send(posts)
-    } catch (error) {
-      throw error
-    }
+    return new HttpResponse(posts, 200)
   }
 }

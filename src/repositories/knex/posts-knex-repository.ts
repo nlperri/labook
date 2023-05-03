@@ -5,7 +5,6 @@ import { PostsRepository } from '../posts-repository'
 
 export class KnexPostsRepository extends Db implements PostsRepository {
   async create({ content, creator_id }: PostCreateInput) {
-    console.log({ creator_id })
     const newPost = {
       id: randomUUID(),
       creator_id,

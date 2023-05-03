@@ -3,14 +3,17 @@
     "target": "ES6",
     "module": "commonjs",
     "sourceMap": true,
-    "outDir": "./build",
-    "rootDir": "./src",
+    "outDir": "build",
+    "rootDirs": ["./src"],
     "removeComments": true,
     "noImplicitAny": true,
     "esModuleInterop": true,
     "noEmitOnError": true,
     "strict": true,
-    "typeRoots": ["./node_modules/@types", "./src/@types"]
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "typeRoots": ["./node_modules/@types", "./src/@types"],
+    "resolveJsonModule": true
   },
   "include": ["src/**/*.ts", "./custom.d.ts"]
 }

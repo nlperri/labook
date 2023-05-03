@@ -1,0 +1,15 @@
+{
+  "entryFile": "src/http/controllers/register.controller.ts",
+  "noImplicitAdditionalProperties": "throw-on-extras",
+  "spec": {
+    "outputDirectory": "docs",
+    "host": "localhost:3003",
+    "basePath": "/v1",
+    "specVersion": 3
+  },
+  "routes": {
+    "basePath": "/v1",
+    "routesDir": "docs",
+    "middleware": "express"
+  }
+}

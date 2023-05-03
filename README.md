@@ -1,3 +1,11 @@
+# Instalation
+
+`npm install`
+`npm run swagger`
+`npm run dev` or `npm run start`
+
+👌
+
 # Labook
 
 ## RFs (Requisitos funcionais)
