@@ -16,5 +16,15 @@
     "resolveJsonModule": true,
     "types": ["vitest/importMeta"]
   },
-  "include": ["src/**/*.ts", "./custom.d.ts"]
+  "include": ["src/**/*.ts", "./custom.d.ts"],
+  "exclude": ["node_modules"],
+  "plugins": [
+    {
+      "name": "vite-plugin-raw",
+      "include": ["**/*.db"],
+      "options": {
+        "loader": "text"
+      }
+    }
+  ]
 }
