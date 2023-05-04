@@ -80,7 +80,7 @@ $ npm run dev || $ npm run start
 
 <table>
 <tr>
-<td>bcriptjs</td>
+<td>bcryptjs</td>
 <td>jsonwebtoken</td>
 <td>swagger-ui</td>
 <td>tsoa</td>
