@@ -3,7 +3,7 @@
     "target": "ES6",
     "module": "commonjs",
     "sourceMap": true,
-    "outDir": "build",
+    "outDir": "./build",
     "rootDirs": ["./src"],
     "removeComments": true,
     "noImplicitAny": true,
@@ -13,7 +13,8 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "typeRoots": ["./node_modules/@types", "./src/@types"],
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "types": ["vitest/importMeta"]
   },
   "include": ["src/**/*.ts", "./custom.d.ts"]
 }

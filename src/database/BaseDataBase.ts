@@ -8,12 +8,18 @@ export abstract class Db {
       filename: env.DB_FILE_PATH,
     },
     useNullAsDefault: true,
+
     pool: {
       min: 0,
       max: 1,
       afterCreate: (conn: any, cb: any) => {
         conn.run('PRAGMA foreign_keys = ON', cb)
       },
+    },
+
+    migrations: {
+      directory: './migrations',
+      tableName: 'knex_migrations',
     },
   })
 }
