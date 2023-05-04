@@ -5,10 +5,11 @@ export class CreateUserDTO {
   private user: User
   private constructor(data: UserCreateInput) {
     this.user = {
-      ...data,
       id: randomUUID(),
-      created_at: new Date().toISOString(),
+      name: data.name,
+      email: data.email,
       password: data.password_hash,
+      created_at: new Date().toISOString(),
       role: data.role ? data.role : USER_ROLES.NORMAL,
     }
   }

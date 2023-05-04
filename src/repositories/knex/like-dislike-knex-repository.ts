@@ -1,5 +1,6 @@
 import { LikeDislikePostInput } from '../../@types/types'
 import { Db } from '../../database/BaseDataBase'
+import { CreateLikeDislikeDTO } from '../../dtos/like-dislike.dto'
 import { likeDislikeRepository } from '../like-dislike-repository'
 
 export class KnexLikeDislikeRepository
@@ -7,13 +8,9 @@ export class KnexLikeDislikeRepository
   implements likeDislikeRepository
 {
   async create({ like, postId, userId }: LikeDislikePostInput) {
-    const newLikeDislike = {
-      like: like ? 1 : 2,
-      post_id: postId,
-      user_id: userId,
-    }
+    const likeDislike = CreateLikeDislikeDTO.build({ like, postId, userId })
 
-    await Db.connection('likes_dislikes').insert(newLikeDislike)
+    await Db.connection('likes_dislikes').insert(likeDislike)
   }
 
   async findByIds(postId: string, userId: string) {

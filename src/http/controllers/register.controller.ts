@@ -21,7 +21,7 @@ export class RegisterController {
       password: z.string().min(6),
     })
     const { name, email, password } = registerBodySchema.parse(body)
-    const user = await this.registerUseCase.execute({
+    const { user } = await this.registerUseCase.execute({
       name,
       email,
       password,

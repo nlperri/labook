@@ -1,20 +1,16 @@
-import { randomUUID } from 'node:crypto'
 import { PostCreateInput, PostEditInput } from '../../@types/types'
 import { Db } from '../../database/BaseDataBase'
 import { PostsRepository } from '../posts-repository'
+import { CreatePostDTO } from '../../dtos/create-post.dto'
+import { UpdatePostDTO } from '../../dtos/update-post.dto'
 
 export class KnexPostsRepository extends Db implements PostsRepository {
   async create({ content, creator_id }: PostCreateInput) {
-    const newPost = {
-      id: randomUUID(),
-      creator_id,
-      content,
-      created_at: new Date().toISOString(),
-    }
+    const post = CreatePostDTO.build({ content, creator_id })
 
-    await Db.connection('posts').insert(newPost)
+    await Db.connection('posts').insert(post)
 
-    return newPost
+    return post
   }
 
   async findById(id: string) {
@@ -30,11 +26,7 @@ export class KnexPostsRepository extends Db implements PostsRepository {
   async update({ id, content }: PostEditInput) {
     const post = await this.findById(id)
 
-    const postToUpdate = {
-      ...post,
-      content: content,
-      updated_at: new Date().toISOString(),
-    }
+    const postToUpdate = UpdatePostDTO.build({ id, content, post })
 
     await Db.connection('posts').update(postToUpdate).where({ id })
 

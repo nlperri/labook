@@ -50,8 +50,8 @@ export type PostCreateInput = {
 
 export type PostEditInput = {
   id: string
-  creator_id?: string
   content: string
+  post: Post
 }
 
 export type FetchPostsOutput = {
