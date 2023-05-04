@@ -17,8 +17,6 @@ $ npm run dev || $ npm run start
 
 ```
 
-👌
-
 ### Estruturação do banco de dados:
 
 <br>
