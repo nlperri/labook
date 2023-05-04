@@ -1,7 +1,7 @@
-import { randomUUID } from 'node:crypto'
 import { USER_ROLES, UserCreateInput } from '../../@types/types'
 import { Db } from '../../database/BaseDataBase'
 import { UsersRepository } from '../users-repository'
+import { CreateUserDTO } from '../../dtos/create-user.dto'
 
 export class KnexUsersRepository extends Db implements UsersRepository {
   async findByEmail(email: string) {
@@ -20,18 +20,11 @@ export class KnexUsersRepository extends Db implements UsersRepository {
     const { name, email, password_hash } = data
     const role = USER_ROLES.ADMIN
 
-    const newUser = {
-      id: randomUUID(),
-      name,
-      email,
-      password: password_hash,
-      created_at: new Date().toISOString(),
-      role,
-    }
+    const user = CreateUserDTO.build({ name, email, password_hash, role })
 
-    await Db.connection('users').insert(newUser)
+    await Db.connection('users').insert(user)
 
-    return newUser
+    return user
   }
 
   async findById(id: string) {
