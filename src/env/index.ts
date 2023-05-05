@@ -7,6 +7,7 @@ const envSchema = z.object({
   DB_FILE_PATH: z.string(),
   JWT_SECRET: z.string(),
   JWT_EXPIRES_IN: z.string(),
+  NODE_VERSION: z.string(),
 })
 
 const _env = envSchema.safeParse(process.env)
