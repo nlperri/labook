@@ -17,12 +17,12 @@ const authenticationMiddleware = makeAuthenticationMiddleware()
 export async function appRoutes() {
   router.post('/users/register', async (req, res) => {
     const { payload, statusCode } = await register.execute(req.body)
-    res.json(payload).status(statusCode)
+    res.status(statusCode).json(payload)
   })
 
   router.post('/users/authenticate', async (req, res) => {
     const { payload, statusCode } = await authenticate.execute(req.body)
-    res.json(payload).status(statusCode)
+    res.status(statusCode).json(payload)
   })
   router.post(
     '/posts',
@@ -32,7 +32,7 @@ export async function appRoutes() {
         requestContent: req.body.content,
         requestUser: req.user!,
       })
-      res.json(payload).status(statusCode)
+      res.status(statusCode).json(payload)
     },
   )
   router.get(
@@ -40,7 +40,7 @@ export async function appRoutes() {
     (req, res, next) => authenticationMiddleware.auth(req, res, next),
     async (_, res) => {
       const { payload, statusCode } = await fetchPosts.execute()
-      res.json(payload).status(statusCode)
+      res.status(statusCode).json(payload)
     },
   )
   router.put(
@@ -52,7 +52,7 @@ export async function appRoutes() {
         requestId: req.params.id,
         requestUser: req.user!,
       })
-      res.json(payload).status(statusCode)
+      res.status(statusCode).json(payload)
     },
   )
   router.delete(
@@ -63,7 +63,7 @@ export async function appRoutes() {
         requestId: req.params.id,
         requestUser: req.user!,
       })
-      res.json(payload).status(statusCode)
+      res.status(statusCode).json(payload)
     },
   )
   router.put(
@@ -75,7 +75,7 @@ export async function appRoutes() {
         requestPostId: req.params.id,
         requestUser: req.user!,
       })
-      res.json(payload).status(statusCode)
+      res.status(statusCode).json(payload)
     },
   )
 }

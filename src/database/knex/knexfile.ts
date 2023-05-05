@@ -1,7 +1,8 @@
 export default {
   client: 'sqlite3',
   connection: {
-    filename: '../labook.db',
+    filename:
+      process.env.NODE_ENV != 'test' ? '../labook.db' : '../labook-test.db',
   },
   useNullAsDefault: true,
 
