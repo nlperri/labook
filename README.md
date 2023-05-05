@@ -6,7 +6,15 @@
 
 Projeto de criação de API com funcionadades CRUD integradas a criação de usuário (com autenticação em jwt token), posts e função de like/dislike com rotas protegidas, implementados a biblioteca de dados em SQLite3.
 
+### Deploy:
+
+https://labook-tc2e.onrender.com
+
 ### Documentação da API:
+
+https://labook-tc2e.onrender.com/docs
+
+ou
 
 ```ubuntu
 $ npm install
@@ -51,7 +59,6 @@ $ npm run dev || $ npm run start
 
 ### Funcionalidades em desenvolvimento:
 
-- [ ] Deploy
 - [ ] Testes E2E
 
 ### Tecnologias utilizadas:
