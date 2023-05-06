@@ -1,8 +1,7 @@
-import { compare, hash } from 'bcryptjs'
+import { compare } from 'bcryptjs'
 import { User } from '../../@types/types'
 import { UsersRepository } from '../../repositories/users-repository'
-import { UserAlreadyExistsError } from '../@errors/user-already-exists-error'
-import { InvalidCredentialsError } from '../@errors/invalid-credentials-error'
+import { UserNotAllowed } from '../@errors/user-not-alowed-error'
 
 interface AuthenticateUseCaseRequest {
   email: string
@@ -23,13 +22,13 @@ export class AuthenticateUseCase {
     const user = await this.usersRepository.findByEmail(email)
 
     if (!user) {
-      throw new InvalidCredentialsError()
+      throw new UserNotAllowed()
     }
 
     const doesPasswordMatches = await compare(password, user.password)
 
     if (!doesPasswordMatches) {
-      throw new InvalidCredentialsError()
+      throw new UserNotAllowed()
     }
 
     return {

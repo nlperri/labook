@@ -8,7 +8,7 @@
     "build": "npm run prebuild && tsup src",
     "start": "node dist/server.js",
     "test:unit": "vitest unit",
-    "test:integration": "vitest integration",
+    "test:integration": "vitest integration --threads=false",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",

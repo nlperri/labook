@@ -1,7 +1,0 @@
-export * from './authenticate.controller'
-export * from './create-post.controller'
-export * from './delete-post.controller'
-export * from './fetch-posts.controller'
-export * from './like-dislike-post.controller'
-export * from './register.controller'
-export * from './update-post.controller'

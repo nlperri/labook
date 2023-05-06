@@ -1,6 +1,6 @@
-import { FetchPostsUseCase } from '../../use-cases/fetch-posts/fetch-posts'
+import { FetchPostsUseCase } from '../../../use-cases/fetch-posts/fetch-posts'
 import { Route, Get } from 'tsoa'
-import { HttpResponse } from '../response/response'
+import { HttpResponse } from '../../response/response'
 
 @Route('posts')
 export class FetchPostsController {

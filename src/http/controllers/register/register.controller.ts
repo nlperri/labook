@@ -1,7 +1,7 @@
 import { z } from 'zod'
-import { RegisterUseCase } from '../../use-cases/register/register'
+import { RegisterUseCase } from '../../../use-cases/register/register'
 import { Body, Post, Response, Route } from 'tsoa'
-import { HttpResponse } from '../response/response'
+import { HttpResponse } from '../../response/response'
 
 interface RegisterRequestBody {
   name: string

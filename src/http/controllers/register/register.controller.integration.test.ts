@@ -1,10 +1,18 @@
 import supertest from 'supertest'
-import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { app } from '../../app'
+import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
+import { app } from '../../../app'
 import { execSync } from 'child_process'
+import { Db } from '../../../database/base-database'
+
+class FakeUsersDb extends Db {
+  async reset() {
+    await Db.connection('users').del()
+  }
+}
 
 describe('Register Controller', () => {
   let server: supertest.SuperTest<supertest.Test>
+
   const user = {
     name: 'test',
     password: 'testtest',
@@ -20,7 +28,12 @@ describe('Register Controller', () => {
     app.removeAllListeners()
   })
 
-  it('should return 400 bad request when no body is provided', async () => {
+  afterEach(async () => {
+    const db = new FakeUsersDb()
+    await db.reset()
+  })
+
+  it('should return status code 400 bad request when no body is provided', async () => {
     await server
       .post('/users/register')
       .expect(400)
@@ -29,7 +42,7 @@ describe('Register Controller', () => {
       })
   })
 
-  it('should register a new user when recive a properly body', async () => {
+  it('should register a new user when receive a properly body', async () => {
     await server
       .post('/users/register')
       .send(user)
@@ -40,8 +53,11 @@ describe('Register Controller', () => {
         expect(response.body.email).toBe('test@gmail.com')
       })
   })
-  it('should return status code conflict when create user with same email', async () => {
+  it('should return status code 409 conflict when create user with same email', async () => {
     const userThatAlreadyExists = user
+
+    await server.post('/users/register').send(user)
+
     await server
       .post('/users/register')
       .send(userThatAlreadyExists)

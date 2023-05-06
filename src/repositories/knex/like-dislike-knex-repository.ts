@@ -1,5 +1,5 @@
 import { LikeDislikePostInput } from '../../@types/types'
-import { Db } from '../../database/BaseDataBase'
+import { Db } from '../../database/base-database'
 import { CreateLikeDislikeDTO } from '../../dtos/like-dislike.dto'
 import { likeDislikeRepository } from '../like-dislike-repository'
 

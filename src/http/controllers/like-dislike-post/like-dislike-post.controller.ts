@@ -1,8 +1,8 @@
 import { z } from 'zod'
-import { TokenPayload, USER_ROLES } from '../../@types/types'
-import { LikeDislikePostUseCase } from '../../use-cases/like-dislike-post.ts/like-dislike-post'
+import { TokenPayload, USER_ROLES } from '../../../@types/types'
+import { LikeDislikePostUseCase } from '../../../use-cases/like-dislike-post.ts/like-dislike-post'
 import { Route, Body, Put } from 'tsoa'
-import { HttpResponse } from '../response/response'
+import { HttpResponse } from '../../response/response'
 
 interface LikeDislikePostRequest {
   requestLike: boolean

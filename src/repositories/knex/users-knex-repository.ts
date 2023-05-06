@@ -1,5 +1,5 @@
 import { USER_ROLES, UserCreateInput } from '../../@types/types'
-import { Db } from '../../database/BaseDataBase'
+import { Db } from '../../database/base-database'
 import { UsersRepository } from '../users-repository'
 import { CreateUserDTO } from '../../dtos/create-user.dto'
 

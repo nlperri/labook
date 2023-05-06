@@ -1,8 +1,8 @@
 import { z } from 'zod'
-import { TokenManager } from '../token-manager'
-import { AuthenticateUseCase } from '../../use-cases/authenticate/authenticate'
+import { TokenManager } from '../../token-manager'
+import { AuthenticateUseCase } from '../../../use-cases/authenticate/authenticate'
 import { Post, Res as TsoaResponse, Route, Body, Response } from 'tsoa'
-import { HttpResponse } from '../response/response'
+import { HttpResponse } from '../../response/response'
 
 interface AuthenticateRequestBody {
   email: string

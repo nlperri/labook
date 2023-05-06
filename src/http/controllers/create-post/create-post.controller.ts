@@ -1,8 +1,8 @@
 import { z } from 'zod'
-import { CreatePostUseCase } from '../../use-cases/create-post/create-post'
-import { TokenPayload, USER_ROLES } from '../../@types/types'
+import { CreatePostUseCase } from '../../../use-cases/create-post/create-post'
+import { TokenPayload, USER_ROLES } from '../../../@types/types'
 import { Post, Route, Body } from 'tsoa'
-import { HttpResponse } from '../response/response'
+import { HttpResponse } from '../../response/response'
 
 interface CreatePostRequestContent {
   requestContent: string

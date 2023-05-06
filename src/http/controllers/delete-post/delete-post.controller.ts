@@ -1,8 +1,8 @@
 import { z } from 'zod'
-import { TokenPayload, USER_ROLES } from '../../@types/types'
-import { DeletePostUseCase } from '../../use-cases/delete-post/delete-post'
+import { TokenPayload, USER_ROLES } from '../../../@types/types'
+import { DeletePostUseCase } from '../../../use-cases/delete-post/delete-post'
 import { Route, Body, Delete } from 'tsoa'
-import { HttpResponse } from '../response/response'
+import { HttpResponse } from '../../response/response'
 
 interface DeletePostRequest {
   requestId: string
