@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { CreatePostUseCase } from '../../../use-cases/create-post/create-post'
 import { Post as TPost, TokenPayload, USER_ROLES } from '../../../@types/types'
-import { Post, Route, Body } from 'tsoa'
+import { Post, Route, Body, SuccessResponse } from 'tsoa'
 import { HttpResponse } from '../../response/response'
 
 interface CreatePostRequestContent {
@@ -12,6 +12,7 @@ interface CreatePostRequestContent {
 @Route('posts')
 export class CreatePostController {
   constructor(private createPostUseCase: CreatePostUseCase) {}
+  @SuccessResponse('201', 'Created')
   @Post()
   async execute(
     @Body()

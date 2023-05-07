@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { TokenPayload, USER_ROLES } from '../../../@types/types'
 import { DeletePostUseCase } from '../../../use-cases/delete-post/delete-post'
-import { Route, Body, Delete } from 'tsoa'
+import { Route, Body, Delete, SuccessResponse } from 'tsoa'
 import { HttpResponse } from '../../response/response'
 
 interface DeletePostRequest {
@@ -12,6 +12,7 @@ interface DeletePostRequest {
 @Route('posts')
 export class DeletePostController {
   constructor(private deletePostUseCase: DeletePostUseCase) {}
+  @SuccessResponse('200', 'Success')
   @Delete(':id')
   async execute(
     @Body()

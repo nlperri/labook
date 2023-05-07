@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { Post, TokenPayload, USER_ROLES } from '../../../@types/types'
 import { UpdatePostUseCase } from '../../../use-cases/update-post/update-post'
-import { Put, Route, Body } from 'tsoa'
+import { Put, Route, Body, SuccessResponse } from 'tsoa'
 import { HttpResponse } from '../../response/response'
 
 interface UpdatePostRequestContent {
@@ -15,6 +15,7 @@ export class UpdatePostController {
   constructor(private updatePostUseCase: UpdatePostUseCase) {}
   @Put(':id')
   async execute(
+    @SuccessResponse('200', 'Success')
     @Body()
     { requestContent, requestId, requestUser }: UpdatePostRequestContent,
   ): Promise<HttpResponse<Post>> {

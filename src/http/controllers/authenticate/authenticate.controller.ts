@@ -1,7 +1,14 @@
 import { z } from 'zod'
 import { TokenManager } from '../../token-manager'
 import { AuthenticateUseCase } from '../../../use-cases/authenticate/authenticate'
-import { Post, Res as TsoaResponse, Route, Body, Response } from 'tsoa'
+import {
+  Post,
+  Res as TsoaResponse,
+  Route,
+  Body,
+  Response,
+  SuccessResponse,
+} from 'tsoa'
 import { HttpResponse } from '../../response/response'
 
 interface AuthenticateRequestBody {
@@ -15,8 +22,9 @@ export class AuthenticateController {
     private tokenManager: TokenManager,
     private authenticateUseCase: AuthenticateUseCase,
   ) {}
+
   @Post('authenticate')
-  @Response('200')
+  @SuccessResponse('200', 'Success')
   async execute(
     @Body() body: AuthenticateRequestBody,
   ): Promise<HttpResponse<string>> {

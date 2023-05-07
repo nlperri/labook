@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { TokenPayload, USER_ROLES } from '../../../@types/types'
 import { LikeDislikePostUseCase } from '../../../use-cases/like-dislike-post.ts/like-dislike-post'
-import { Route, Body, Put } from 'tsoa'
+import { Route, Body, Put, SuccessResponse } from 'tsoa'
 import { HttpResponse } from '../../response/response'
 
 interface LikeDislikePostRequest {
@@ -13,6 +13,7 @@ interface LikeDislikePostRequest {
 @Route('posts')
 export class LikeDislikePostController {
   constructor(private likeDislikePostUseCase: LikeDislikePostUseCase) {}
+  @SuccessResponse('200', 'Success')
   @Put(':id/like')
   async execute(
     @Body()
