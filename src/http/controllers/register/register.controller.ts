@@ -1,7 +1,8 @@
 import { z } from 'zod'
 import { RegisterUseCase } from '../../../use-cases/register/register'
-import { Body, Post, Response, Route } from 'tsoa'
+import { Body, Post, Produces, Response, Route } from 'tsoa'
 import { HttpResponse } from '../../response/response'
+import { USER_ROLES, User } from '../../../@types/types'
 
 interface RegisterRequestBody {
   name: string
@@ -12,9 +13,11 @@ interface RegisterRequestBody {
 @Route('users')
 export class RegisterController {
   constructor(private registerUseCase: RegisterUseCase) {}
+
   @Post('register')
-  @Response('201')
-  async execute(@Body() body: RegisterRequestBody) {
+  async execute(
+    @Body() body: RegisterRequestBody,
+  ): Promise<HttpResponse<Omit<User, 'password'>>> {
     const registerBodySchema = z.object({
       name: z.string(),
       email: z.string().email(),
@@ -27,6 +30,6 @@ export class RegisterController {
       password,
     })
 
-    return new HttpResponse<void>(user, 201)
+    return new HttpResponse<Omit<User, 'password'>>(user, 201)
   }
 }

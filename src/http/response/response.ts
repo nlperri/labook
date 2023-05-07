@@ -1,4 +1,4 @@
-export class HttpResponse<T = any> {
+export class HttpResponse<T> {
   payload: T
   statusCode: number
   constructor(payload: any, statusCode: number = 200) {

@@ -17,7 +17,7 @@ export class LikeDislikePostController {
   async execute(
     @Body()
     { requestLike, requestPostId, requestUser }: LikeDislikePostRequest,
-  ) {
+  ): Promise<void> {
     const likeDislikePostInputSchema = z.object({
       like: z.boolean(),
       postId: z.string(),
@@ -39,7 +39,5 @@ export class LikeDislikePostController {
       postId,
       userId: user.id,
     })
-
-    return new HttpResponse<void>(200)
   }
 }

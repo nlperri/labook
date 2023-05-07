@@ -16,7 +16,7 @@ export class DeletePostController {
   async execute(
     @Body()
     { requestId, requestUser }: DeletePostRequest,
-  ) {
+  ): Promise<HttpResponse<string>> {
     const deletePostInputSchema = z.object({
       id: z.string(),
       user: z.object({
@@ -36,6 +36,6 @@ export class DeletePostController {
       user,
     })
 
-    return new HttpResponse<void>('Post successfully deleted', 200)
+    return new HttpResponse<string>('Post successfully deleted', 204)
   }
 }

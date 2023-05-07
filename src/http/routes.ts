@@ -70,12 +70,12 @@ export async function appRoutes() {
     '/posts/:id/like',
     (req, res, next) => authenticationMiddleware.auth(req, res, next),
     async (req, res) => {
-      const { payload, statusCode } = await likeDislikePosts.execute({
+      await likeDislikePosts.execute({
         requestLike: req.body.like,
         requestPostId: req.params.id,
         requestUser: req.user!,
       })
-      res.status(statusCode).json(payload)
+      res.status(200)
     },
   )
 }

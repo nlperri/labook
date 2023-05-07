@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { TokenPayload, USER_ROLES } from '../../../@types/types'
+import { Post, TokenPayload, USER_ROLES } from '../../../@types/types'
 import { UpdatePostUseCase } from '../../../use-cases/update-post/update-post'
 import { Put, Route, Body } from 'tsoa'
 import { HttpResponse } from '../../response/response'
@@ -17,7 +17,7 @@ export class UpdatePostController {
   async execute(
     @Body()
     { requestContent, requestId, requestUser }: UpdatePostRequestContent,
-  ) {
+  ): Promise<HttpResponse<Post>> {
     const updatePostInputSchema = z.object({
       content: z.string(),
       id: z.string(),
@@ -40,6 +40,6 @@ export class UpdatePostController {
       user,
     })
 
-    return new HttpResponse<void>(post, 200)
+    return new HttpResponse<Post>(post, 200)
   }
 }

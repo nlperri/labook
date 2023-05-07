@@ -17,7 +17,9 @@ export class AuthenticateController {
   ) {}
   @Post('authenticate')
   @Response('200')
-  async execute(@Body() body: AuthenticateRequestBody) {
+  async execute(
+    @Body() body: AuthenticateRequestBody,
+  ): Promise<HttpResponse<string>> {
     const authenticateBodySchema = z.object({
       email: z.string().email(),
       password: z.string().min(6),
@@ -36,6 +38,6 @@ export class AuthenticateController {
       role: user.role,
     })
 
-    return new HttpResponse<void>(token, 200)
+    return new HttpResponse<string>(token, 200)
   }
 }

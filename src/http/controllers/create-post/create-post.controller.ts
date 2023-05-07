@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { CreatePostUseCase } from '../../../use-cases/create-post/create-post'
-import { TokenPayload, USER_ROLES } from '../../../@types/types'
+import { Post as TPost, TokenPayload, USER_ROLES } from '../../../@types/types'
 import { Post, Route, Body } from 'tsoa'
 import { HttpResponse } from '../../response/response'
 
@@ -16,7 +16,7 @@ export class CreatePostController {
   async execute(
     @Body()
     { requestContent, requestUser }: CreatePostRequestContent,
-  ) {
+  ): Promise<HttpResponse<TPost>> {
     const createPostInputSchema = z.object({
       content: z.string(),
       user: z.object({
@@ -36,6 +36,6 @@ export class CreatePostController {
       userId: user.id,
     })
 
-    return new HttpResponse<void>(post, 201)
+    return new HttpResponse<TPost>(post, 201)
   }
 }
