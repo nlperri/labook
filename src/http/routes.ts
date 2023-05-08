@@ -59,11 +59,11 @@ export async function appRoutes() {
     '/posts/:id',
     (req, res, next) => authenticationMiddleware.auth(req, res, next),
     async (req, res) => {
-      const { payload, statusCode } = await deletePosts.execute({
+      await deletePosts.execute({
         requestId: req.params.id,
         requestUser: req.user!,
       })
-      res.status(statusCode).json(payload)
+      res.status(204).send()
     },
   )
   router.put(
@@ -75,7 +75,7 @@ export async function appRoutes() {
         requestPostId: req.params.id,
         requestUser: req.user!,
       })
-      res.status(200)
+      res.status(204).send()
     },
   )
 }

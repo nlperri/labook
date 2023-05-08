@@ -1,8 +1,8 @@
-import { Post, PostEditInput } from '../@types/types'
+import { Post, PostEditInput, PostEditInputDTO } from '../@types/types'
 
 export class UpdatePostDTO {
   private post: Post
-  private constructor(data: PostEditInput) {
+  private constructor(data: PostEditInputDTO) {
     this.post = {
       ...data.post,
       content: data.content,
@@ -10,7 +10,7 @@ export class UpdatePostDTO {
     }
   }
 
-  static build(input: PostEditInput) {
+  static build(input: PostEditInputDTO) {
     const { post } = new UpdatePostDTO(input)
     return post
   }

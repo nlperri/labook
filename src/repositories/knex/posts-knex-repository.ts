@@ -1,4 +1,4 @@
-import { PostCreateInput, PostEditInput } from '../../@types/types'
+import { Post, PostCreateInput, PostEditInput } from '../../@types/types'
 import { Db } from '../../database/base-database'
 import { PostsRepository } from '../posts-repository'
 import { CreatePostDTO } from '../../dtos/create-post.dto'

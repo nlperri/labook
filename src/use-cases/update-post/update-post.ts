@@ -22,14 +22,20 @@ export class UpdatePostUseCase {
     content,
     user,
   }: UpdatePostUseCaseRequest): Promise<UpdatePostUseCaseResponse> {
-    const post = await this.postsRepository.update({ content, id })
+    const postExists = await this.postsRepository.findById(id)
 
-    if (!post) {
+    if (!postExists) {
       throw new ResourceNotFoundError('Invalid post id')
     }
 
-    if (post.creator_id !== user.id) {
+    if (postExists.creator_id !== user.id) {
       throw new UserNotAllowed()
+    }
+
+    const post = await this.postsRepository.update({ content, id })
+
+    if (!post) {
+      throw new Error()
     }
 
     return {

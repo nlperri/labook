@@ -2,7 +2,6 @@ import { z } from 'zod'
 import { TokenPayload, USER_ROLES } from '../../../@types/types'
 import { DeletePostUseCase } from '../../../use-cases/delete-post/delete-post'
 import { Route, Body, Delete, SuccessResponse } from 'tsoa'
-import { HttpResponse } from '../../response/response'
 
 interface DeletePostRequest {
   requestId: string
@@ -17,7 +16,7 @@ export class DeletePostController {
   async execute(
     @Body()
     { requestId, requestUser }: DeletePostRequest,
-  ): Promise<HttpResponse<string>> {
+  ): Promise<void> {
     const deletePostInputSchema = z.object({
       id: z.string(),
       user: z.object({
@@ -36,7 +35,5 @@ export class DeletePostController {
       id,
       user,
     })
-
-    return new HttpResponse<string>('Post successfully deleted', 204)
   }
 }

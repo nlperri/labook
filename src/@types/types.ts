@@ -51,6 +51,11 @@ export type PostCreateInput = {
 export type PostEditInput = {
   id: string
   content: string
+}
+
+export type PostEditInputDTO = {
+  id: string
+  content: string
   post: Post
 }
 
