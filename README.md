@@ -60,7 +60,6 @@ $ npm run dev || $ npm run start
 - [x] Testes unitários;
 - [x] Testes de integração;
 
-### Funcionalidades em desenvolvimento:
 
 ### Tecnologias utilizadas:
 
