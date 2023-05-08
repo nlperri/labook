@@ -58,10 +58,9 @@ $ npm run dev || $ npm run start
 - [x] Os dados da aplicação precisam estar persistidos em um banco SQLite;
 - [x] O usuário deve ser identificado por um JJWT (JSON Web Token);
 - [x] Testes unitários;
+- [x] Testes de integração;
 
 ### Funcionalidades em desenvolvimento:
-
-- [ ] Testes de integração;
 
 ### Tecnologias utilizadas:
 

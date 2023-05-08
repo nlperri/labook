@@ -6,7 +6,7 @@ import { Db } from '../../../database/base-database'
 import { KnexUsersRepository } from '../../../repositories/knex/users-knex-repository'
 import { hash } from 'bcryptjs'
 
-class FakeUsersDb extends Db {
+class FakeDb extends Db {
   constructor() {
     super()
   }
@@ -34,7 +34,7 @@ describe('Authenticate Controller', async () => {
   })
 
   afterEach(async () => {
-    const db = new FakeUsersDb()
+    const db = new FakeDb()
     await db.reset()
   })
 

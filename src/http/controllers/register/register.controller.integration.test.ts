@@ -4,7 +4,7 @@ import { app } from '../../../app'
 import { execSync } from 'child_process'
 import { Db } from '../../../database/base-database'
 
-class FakeUsersDb extends Db {
+class FakeDb extends Db {
   async reset() {
     await Db.connection('users').del()
   }
@@ -29,7 +29,7 @@ describe('Register Controller', () => {
   })
 
   afterEach(async () => {
-    const db = new FakeUsersDb()
+    const db = new FakeDb()
     await db.reset()
   })
 

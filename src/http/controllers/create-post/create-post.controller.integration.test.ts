@@ -6,7 +6,7 @@ import { Db } from '../../../database/base-database'
 import { hash } from 'bcryptjs'
 import { KnexUsersRepository } from '../../../repositories/knex/users-knex-repository'
 
-class FakePostsDb extends Db {
+class FakeDb extends Db {
   constructor() {
     super()
   }
@@ -48,7 +48,7 @@ describe('Create Post Controller', async () => {
   })
 
   afterEach(async () => {
-    const db = new FakePostsDb()
+    const db = new FakeDb()
     await db.reset()
   })
 

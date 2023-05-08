@@ -13,6 +13,7 @@ export class AuthenticationMiddleware {
 
     try {
       const payload = this.tokenManager.getPayload(token)
+
       if (payload) {
         req.user = payload
         next()

@@ -12,12 +12,13 @@ class FakeDb extends Db {
     super()
   }
   async reset() {
+    await Db.connection('likes_dislikes').del()
     await Db.connection('posts').del()
     await Db.connection('users').del()
   }
 }
 
-describe('Update Post Controller', async () => {
+describe('Like Dislike Post Controller', async () => {
   let server: supertest.SuperTest<supertest.Test>
   const usersRepository = new KnexUsersRepository()
   const postsRepository = new KnexPostsRepository()
@@ -56,7 +57,7 @@ describe('Update Post Controller', async () => {
 
   it('should return 401 not authorized when no token is provided', async () => {
     await server
-      .put('/posts/:id')
+      .put('/posts/:id/like')
       .expect(401)
       .then((response) => {
         expect(response.body).toBe('Not authorizated')
@@ -70,7 +71,13 @@ describe('Update Post Controller', async () => {
       password_hash: await hash(user.password, 6),
     })
 
-    authToken = await getToken(user.email, user.password)
+    const userWithoutPost = await usersRepository.create({
+      name: 'some-name',
+      email: 'someemail@email.com',
+      password_hash: await hash('123123', 6),
+    })
+
+    authToken = await getToken(userWithoutPost.email, '123123')
 
     const post = await postsRepository.create({
       content: 'some-content',
@@ -78,46 +85,51 @@ describe('Update Post Controller', async () => {
     })
 
     await server
-      .put(`/posts/${post.id}`)
+      .put(`/posts/${post.id}/like`)
       .set('Authorization', `Bearer ${authToken}`)
-
       .expect(400)
       .then((response) => {
         expect(response.body.message).toBe('Validation error')
       })
   })
+
   it('should return 404 not found when receive invalid post id', async () => {
-    await usersRepository.create({
-      name: user.name,
-      email: user.email,
-      password_hash: await hash(user.password, 6),
+    const userWithoutPost = await usersRepository.create({
+      name: 'some-name',
+      email: 'someemail@email.com',
+      password_hash: await hash('123123', 6),
     })
+
+    authToken = await getToken(userWithoutPost.email, '123123')
 
     const wrongId = 'wrong-id'
 
-    authToken = await getToken(user.email, user.password)
-
     await server
-      .put(`/posts/${wrongId}`)
+      .put(`/posts/${wrongId}/like`)
       .set('Authorization', `Bearer ${authToken}`)
       .send({
-        content: 'updated content',
-        creator_id: 'some-id',
+        like: true,
       })
       .expect(404)
       .then((response) => {
-        expect(response.body).toBe('Invalid post id')
+        expect(response.body).toBe('Resource not found')
       })
   })
 
-  it('should update a post when receive a valid token, valid id param and properly body', async () => {
+  it('should like/dislike a post when receive a valid token, valid id param and properly body', async () => {
     const userWithPost = await usersRepository.create({
       name: user.name,
       email: user.email,
       password_hash: await hash(user.password, 6),
     })
 
-    authToken = await getToken(user.email, user.password)
+    const userWithoutPost = await usersRepository.create({
+      name: 'some-name',
+      email: 'someemail@email.com',
+      password_hash: await hash('123123', 6),
+    })
+
+    authToken = await getToken(userWithoutPost.email, '123123')
 
     const post = await postsRepository.create({
       content: 'some-content',
@@ -125,20 +137,11 @@ describe('Update Post Controller', async () => {
     })
 
     await server
-      .put(`/posts/${post.id}`)
+      .put(`/posts/${post.id}/like`)
       .set('Authorization', `Bearer ${authToken}`)
       .send({
-        content: 'updated content',
-        creator_id: userWithPost.id,
+        like: true,
       })
-      .expect(200)
-      .then((response) => {
-        expect(response.body).toEqual(
-          expect.objectContaining({
-            content: 'updated content',
-            creator_id: userWithPost.id,
-          }),
-        )
-      })
+      .expect(204)
   })
 })
