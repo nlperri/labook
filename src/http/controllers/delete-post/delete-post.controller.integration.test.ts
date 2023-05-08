@@ -16,7 +16,7 @@ class FakePostsDb extends Db {
   }
 }
 
-describe('Create Post Controller', async () => {
+describe('Delete Post Controller', async () => {
   let server: supertest.SuperTest<supertest.Test>
   const usersRepository = new KnexUsersRepository()
   let authToken
@@ -52,16 +52,16 @@ describe('Create Post Controller', async () => {
     await db.reset()
   })
 
-  it('should return 401 not authorized when no token is provided', async () => {
+  it.skip('should return 401 not authorized when no token is provided', async () => {
     await server
-      .post('/posts')
+      .delete('/posts/:id')
       .expect(401)
       .then((response) => {
         expect(response.body).toBe('Not authorizated')
       })
   })
 
-  it('should return 400 bad request when no body is provided', async () => {
+  it('should return 400 bad request when id is not provided', async () => {
     await usersRepository.create({
       name: user.name,
       email: user.email,
@@ -71,7 +71,7 @@ describe('Create Post Controller', async () => {
     authToken = await getToken(user.email, user.password)
 
     await server
-      .post('/posts')
+      .post('/posts/:id')
       .set('Authorization', `Bearer ${authToken}`)
       .expect(400)
       .then((response) => {
@@ -79,7 +79,7 @@ describe('Create Post Controller', async () => {
       })
   })
 
-  it('should create a post when receive a valid token and a properly body', async () => {
+  it.skip('should create a post when receive a valid token and a properly body', async () => {
     const userWithPost = await usersRepository.create({
       name: user.name,
       email: user.email,

@@ -3,7 +3,6 @@ import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
 import { app } from '../../../app'
 import { execSync } from 'child_process'
 import { Db } from '../../../database/base-database'
-import { USER_ROLES } from '../../../@types/types'
 import { KnexUsersRepository } from '../../../repositories/knex/users-knex-repository'
 import { hash } from 'bcryptjs'
 

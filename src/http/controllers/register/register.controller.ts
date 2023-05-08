@@ -39,6 +39,13 @@ export class RegisterController {
       password,
     })
 
-    return new HttpResponse<Omit<User, 'password'>>(user, 201)
+    const userResponse = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      createdAt: user.created_at,
+    }
+
+    return new HttpResponse<Omit<User, 'password'>>(userResponse, 201)
   }
 }
