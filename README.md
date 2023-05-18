@@ -9,7 +9,7 @@ Projeto de criação de API com funcionadades CRUD integradas a criação de usu
 ### Deploy:
 
 https://labook-tc2e.onrender.com
-<br>(no ar até 05/06/2023)
+
 
 ### Documentação da API:
 
